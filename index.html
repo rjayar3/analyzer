@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADHD Medication Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A90E2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ADHD Tracker">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <h1>ADHD Medication Tracker</h1>
+            <div class="date" id="currentDate"></div>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="doses">Today's Doses</button>
+            <button class="tab-btn" data-tab="new-dose">New Dose</button>
+            <button class="tab-btn" data-tab="reference">Quick Ref</button>
+            <button class="tab-btn" data-tab="history">History</button>
+        </nav>
+
+        <!-- Today's Doses Tab -->
+        <div class="tab-content active" id="doses">
+            <div id="dosesList" class="doses-list">
+                <div class="empty-state">
+                    <p>No doses logged today</p>
+                    <button class="btn-primary" onclick="switchTab('new-dose')">Log First Dose</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Dose Tab -->
+        <div class="tab-content" id="new-dose">
+            <div class="card">
+                <h2>Log New Dose</h2>
+                <form id="newDoseForm">
+                    <div class="form-group">
+                        <label>Medication Name</label>
+                        <input type="text" id="medName" value="Ritalin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <select id="amount" required>
+                            <option value="">Select dosage</option>
+                            <option value="5mg">5mg</option>
+                            <option value="10mg">10mg</option>
+                            <option value="15mg">15mg</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Time Taken</label>
+                        <input type="time" id="timeTaken" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enableNotifications" checked>
+                            Enable symptom rating reminders
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Tracking Sheet</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Daily Dose Reminders</h3>
+                <p class="help-text">Set up to 3 daily medication reminders</p>
+                <div id="doseReminders">
+                    <div class="reminder-row">
+                        <input type="time" id="reminder1" placeholder="First dose time">
+                        <button type="button" onclick="setDailyReminder(1)">Set Reminder</button>
+                    </div>
+                    <div class="reminder-row">
+                        <input type="time" id="reminder2" placeholder="Second dose time">
+                        <button type="button" onclick="setDailyReminder(2)">Set Reminder</button>
+                    </div>
+                    <div class="reminder-row">
+                        <input type="time" id="reminder3" placeholder="Third dose time">
+                        <button type="button" onclick="setDailyReminder(3)">Set Reminder</button>
+                    </div>
+                </div>
+                <div class="active-reminders" id="activeReminders"></div>
+            </div>
+        </div>
+
+        <!-- Quick Reference Tab -->
+        <div class="tab-content" id="reference">
+            <div class="card medication-card">
+                <h2>💊 Ritalin (Methylphenidate)</h2>
+                
+                <div class="med-section">
+                    <h3>📋 Dosing Guidelines</h3>
+                    <ul class="guidelines-list">
+                        <li><strong>Empty stomach:</strong> 30 min before food, 1 hr after food</li>
+                        <li><strong>Timing:</strong> 4 hours apart</li>
+                        <li><strong>Duration:</strong> 3 hours active, 1 hour washout</li>
+                        <li><strong>Tracking:</strong> Fill out sheets every hour during dosing</li>
+                    </ul>
+                </div>
+
+                <div class="med-section">
+                    <h3>📅 6-Day Titration Schedule</h3>
+                    <div class="schedule-table">
+                        <div class="schedule-row schedule-header">
+                            <div class="day-col">Day</div>
+                            <div class="dose-col">Dose 1</div>
+                            <div class="dose-col">Dose 2</div>
+                            <div class="dose-col">Dose 3</div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="day-col">1</div>
+                            <div class="dose-col">5mg</div>
+                            <div class="dose-col">5mg</div>
+                            <div class="dose-col">Nothing</div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="day-col">2</div>
+                            <div class="dose-col">5mg</div>
+                            <div class="dose-col">5mg</div>
+                            <div class="dose-col">5mg</div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="day-col">3-4</div>
+                            <div class="dose-col">10mg</div>
+                            <div class="dose-col">10mg</div>
+                            <div class="dose-col">10mg</div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="day-col">5-6</div>
+                            <div class="dose-col">15mg</div>
+                            <div class="dose-col">15mg</div>
+                            <div class="dose-col">15mg</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="med-section">
+                    <h3>📊 Tracking Tips</h3>
+                    <div class="tip-box">
+                        <p><strong>Snapshot Method:</strong> Once familiar with the medication, you can take "snapshots" by tracking symptoms 1.5-2 hours after taking the dose - once in the morning and once in the afternoon.</p>
+                    </div>
+                </div>
+
+                <div class="med-section">
+                    <h3>⏰ Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn-secondary" onclick="setFoodReminder()">🍽️ Food Timer</button>
+                        <button class="btn-secondary" onclick="setNextDoseReminder()">⏰ Next Dose (4hr)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Tab -->
+        <div class="tab-content" id="history">
+            <div class="card">
+                <h2>History</h2>
+                <div class="backup-controls">
+                    <div class="export-buttons">
+                        <button class="btn-secondary" onclick="exportData()">📤 Backup (JSON)</button>
+                        <button class="btn-secondary" onclick="exportCSV()">📊 Export CSV</button>
+                    </div>
+                    <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📥 Import
+                        Backup</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;"
+                        onchange="importData(event)">
+                </div>
+                <div id="historyList" class="history-list">
+                    <p>No history yet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking Sheet Modal -->
+        <div id="trackingModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Tracking Sheet</h3>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+
+                <div class="time-selector">
+                    <div class="current-time-label">Rating for: <span id="currentTimeLabel">1 Hour</span></div>
+                    <div class="time-buttons">
+                        <button class="time-btn active" data-time="1hour">1hr</button>
+                        <button class="time-btn" data-time="2hour">2hr</button>
+                        <button class="time-btn" data-time="3hour">3hr</button>
+                        <button class="time-btn" data-time="later">Later</button>
+                    </div>
+                </div>
+
+                <div class="symptoms-container">
+                    <div class="symptoms-header">
+                        <div class="symptom-col-header">Symptoms</div>
+                        <div class="rating-col-header">Rating</div>
+                    </div>
+                    <div id="symptomsList" class="symptoms-list"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="save-status" id="saveStatus">Auto-saving...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
