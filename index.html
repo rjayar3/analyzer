@@ -94,7 +94,7 @@
         <div class="tab-content" id="reference">
             <div class="card medication-card">
                 <h2>💊 Ritalin (Methylphenidate)</h2>
-                
+
                 <div class="med-section">
                     <h3>📋 Dosing Guidelines</h3>
                     <ul class="guidelines-list">
@@ -144,7 +144,9 @@
                 <div class="med-section">
                     <h3>📊 Tracking Tips</h3>
                     <div class="tip-box">
-                        <p><strong>Snapshot Method:</strong> Once familiar with the medication, you can take "snapshots" by tracking symptoms 1.5-2 hours after taking the dose - once in the morning and once in the afternoon.</p>
+                        <p><strong>Snapshot Method:</strong> Once familiar with the medication, you can take "snapshots"
+                            by tracking symptoms 1.5-2 hours after taking the dose - once in the morning and once in the
+                            afternoon.</p>
                     </div>
                 </div>
 
@@ -212,6 +214,20 @@
     </div>
 
     <script src="app.js"></script>
+    <script>
+        // Register service worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/analyzer/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>

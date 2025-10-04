@@ -1,10 +1,10 @@
 const CACHE_NAME = 'adhd-tracker-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/app.js',
-  '/styles.css',
-  '/manifest.json'
+  '/analyzer/',
+  '/analyzer/index.html',
+  '/analyzer/app.js',
+  '/analyzer/styles.css',
+  '/analyzer/manifest.json'
 ];
 
 // Install event - cache resources
