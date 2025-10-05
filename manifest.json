@@ -2,7 +2,7 @@
   "name": "ADHD Medication Tracker",
   "short_name": "ADHD Tracker",
   "description": "Track ADHD medication effects and symptoms",
-  "start_url": "/",
+  "start_url": "/analyzer/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4A90E2",
